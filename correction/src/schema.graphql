@@ -1,0 +1,79 @@
+# =============================================================================
+#  schema.graphql — CORRIGÉ (étape 1 + bonus A et B).
+# =============================================================================
+
+"Un article vendu par la boutique."
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+}
+
+# ------------------------------------------------------------------ étape 1 --
+
+"Les états possibles d'une commande : un ensemble FINI de valeurs."
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+}
+
+type Order {
+  id: ID!
+  status: OrderStatus!
+  quantity: Int!
+  "Prix total en euros (price x quantity)."
+  total: Float!
+  # En base, la commande n'a qu'un productId. Le schéma expose l'OBJET :
+  # c'est le resolver Order.product qui fait le lien.
+  product: Product!
+}
+
+type User {
+  id: ID!
+  name: String!
+  # Pas d'email : il existe en base, mais aucun écran n'en a besoin.
+  # Le client ne peut demander QUE ce qui figure dans le schéma.
+  "[Order!]! : une liste non nulle, d'éléments non nuls."
+  orders: [Order!]!
+}
+
+"Les données envoyées pour créer une commande."
+input CreateOrderInput {
+  productId: ID!
+  quantity: Int!
+}
+
+type Query {
+  "Tout le catalogue."
+  products: [Product!]!
+
+  "Un utilisateur, ou null si l'id est inconnu (d'où l'absence de !)."
+  user(id: ID!): User
+
+  "Toutes les commandes."
+  orders: [Order!]!
+
+  "BONUS B : une commande. Lève une erreur NOT_FOUND si elle n'existe pas."
+  order(id: ID!): Order
+}
+
+# ------------------------------------------------------------------ bonus A --
+
+type Mutation {
+  "Passe une commande pour l'utilisateur connecté."
+  createOrder(input: CreateOrderInput!): CreateOrderPayload!
+}
+
+type CreateOrderPayload {
+  "La commande créée, ou null si elle a été refusée."
+  order: Order
+  "Les refus métier (stock épuisé...). Vide si tout va bien."
+  userErrors: [UserError!]!
+}
+
+type UserError {
+  message: String!
+  "Le champ de l'input en cause, s'il y en a un."
+  field: String
+}

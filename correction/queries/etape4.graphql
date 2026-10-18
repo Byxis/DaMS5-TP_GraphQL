@@ -1,0 +1,30 @@
+# =============================================================================
+#  ÉTAPE 4 — CORRIGÉ.
+#
+#  Variables à saisir dans la Sandbox (onglet "Variables") :
+#    { "id": "42", "details": true }
+# =============================================================================
+
+query MonProfil($id: ID!, $details: Boolean!) {
+  user(id: $id) {
+    name
+    # @include : le champ n'est demandé QUE si $details vaut true.
+    # (@skip(if: ...) fait l'inverse.)
+    orders @include(if: $details) {
+      status
+      product {
+        ...InfosProduit
+      }
+    }
+  }
+  products {
+    ...InfosProduit
+  }
+}
+
+# Un fragment = un morceau de sélection réutilisable, sur un type donné.
+# On change la liste des champs ici, et les deux endroits suivent.
+fragment InfosProduit on Product {
+  name
+  price
+}
