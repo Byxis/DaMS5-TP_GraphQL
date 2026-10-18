@@ -1,0 +1,25 @@
+{
+  "name": "tp-graphql-boutique",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TP GraphQL DaMS5 : une API de commandes avec Apollo Server",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node --watch --watch-path=src src/index.js",
+    "start": "node src/index.js",
+    "test": "node --test \"tests/*.test.js\"",
+    "test:1": "node --test tests/etape1.test.js",
+    "test:2": "node --test tests/etape2.test.js",
+    "test:3": "node --test tests/etape3.test.js",
+    "test:4": "node --test tests/etape4.test.js",
+    "test:bonus": "node --test tests/bonus.test.js"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.5.1",
+    "dataloader": "^2.2.3",
+    "graphql": "^16.14.2"
+  }
+}

@@ -1,0 +1,39 @@
+# =============================================================================
+#  schema.graphql — LE CONTRAT de l'API, écrit en SDL.
+#
+#  C'est ici que vous écrivez le schéma (étape 1). Le serveur redémarre tout
+#  seul à chaque sauvegarde.
+#  Coloration dans VS Code : extension « GraphQL: Syntax Highlighting ».
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+#  EXEMPLE DONNÉ : un type objet complet. Inspirez-vous-en.
+# -----------------------------------------------------------------------------
+"Un article vendu par la boutique."
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+}
+
+# -----------------------------------------------------------------------------
+#  ÉTAPE 1 — TODO(vous) : écrire les types manquants (voir l'énoncé, §2).
+#
+#   1. OrderStatus        (PENDING, SHIPPED, DELIVERED)
+#   2. Order              (id, status, quantity, total, product)
+#   3. User               (id, name, orders)
+#   4. CreateOrderInput   (productId, quantity)
+#   5. compléter Query    (user et orders)
+# -----------------------------------------------------------------------------
+
+
+
+# -----------------------------------------------------------------------------
+#  Le point d'entrée. Tout part d'ici.
+# -----------------------------------------------------------------------------
+type Query {
+  "Tout le catalogue."
+  products: [Product!]!
+
+  # TODO(vous) : ajouter user(...) et orders ici
+}

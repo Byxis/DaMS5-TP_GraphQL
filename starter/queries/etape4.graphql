@@ -1,0 +1,27 @@
+# =============================================================================
+#  ÉTAPE 4 — Fragments et directives (voir l'énoncé, §5).
+#
+#  Collez cette requête dans la Sandbox, avec les variables :
+#    { "id": "42", "details": true }
+#  Améliorez-la, puis recopiez ici la version finale : c'est ce fichier que
+#  lit `npm run test:4`.
+# =============================================================================
+
+query MonProfil($id: ID!, $details: Boolean!) {
+  user(id: $id) {
+    name
+    orders {          # TODO 1 (directive) : seulement si $details vaut true
+      status
+      product {
+        name          # TODO 2 (fragment) : remplacer ces deux champs
+        price
+      }
+    }
+  }
+  products {
+    name              # TODO 2 (fragment) : ... et ces deux-là aussi
+    price
+  }
+}
+
+# TODO 2 (fragment) : définir le fragment InfosProduit ici
